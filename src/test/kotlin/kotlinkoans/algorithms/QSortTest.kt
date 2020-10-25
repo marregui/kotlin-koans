@@ -26,15 +26,15 @@ import java.util.concurrent.ThreadLocalRandom
 class QSortTest {
 
     @Test
-    fun test_qsort() {
+    fun test_qsort_ints() {
         val array = intArrayOf(1, 2, 3, 4, 5).toTypedArray()
         qsort(array)
         assertThat(array, `is`(intArrayOf(5, 4, 3, 2, 1)))
     }
 
     @Test
-    fun test_qsort_randomized() {
-        val array = generateRandArray(10, 10)
+    fun test_qsort_randomized_ints() {
+        val array = generateRandIntArray(10, 10)
         val arrayCopy = array.copyOf()
         qsort(array)
         Arrays.sort(arrayCopy)
@@ -42,8 +42,15 @@ class QSortTest {
         assertThat(array, `is`(arrayCopy))
     }
 
-    private fun generateRandArray(size: Int, max: Int): Array<Int> {
+    private fun generateRandIntArray(size: Int, max: Int): Array<Int> {
         val r = ThreadLocalRandom.current()
         return Array(size) { r.nextInt(max + 1) }
+    }
+
+    @Test
+    fun test_qsort_strings() {
+        val array = arrayOf("Miguel", "Pablo",  "Pedro", "Catalina")
+        qsort(array)
+        assertThat(array, `is`(arrayOf("Pedro", "Pablo", "Miguel", "Catalina")))
     }
 }

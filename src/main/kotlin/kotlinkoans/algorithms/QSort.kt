@@ -17,7 +17,7 @@
 
 package kotlinkoans.algorithms
 
-fun qsort(array: Array<Int>) {
+fun <T: Comparable<T>> qsort(array: Array<T>) {
     val stack = IndexStack()
     stack.push(0, array.size - 1)
     while (stack.size > 0) {
