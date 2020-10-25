@@ -1,8 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion by System.getProperties()
-    kotlin("jvm") version "$kotlinVersion"
+    kotlin("jvm") version Versions.kotlin
     id("application")
     id("idea")
 }
@@ -15,10 +14,14 @@ repositories {
 }
 
 dependencies {
-    val kotlinCoroutinesVersion by System.getProperties()
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-    testImplementation(kotlin("test-junit5"))
+    implementation(Libs.kotlinCoroutines)
     implementation(kotlin("stdlib-jdk8"))
+    implementation(Libs.logging)
+    testImplementation(Libs.junitJupiter)
+    testImplementation(Libs.junitJupiterApi)
+    testImplementation(Libs.junitJupiterEngine)
+    testImplementation(Libs.hamcrest)
+    testImplementation(Libs.mokitoCore)
 }
 
 val compileKotlin: KotlinCompile by tasks
@@ -38,4 +41,8 @@ application {
 tasks.named<Wrapper>("wrapper") {
     gradleVersion = "6.7"
     distributionType = Wrapper.DistributionType.ALL
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
 }
