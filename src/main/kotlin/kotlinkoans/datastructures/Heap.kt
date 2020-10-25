@@ -15,7 +15,7 @@
  * Copyright 2020, Miguel Arregui a.k.a. marregui
  */
 
-package kotlinkoans
+package kotlinkoans.datastructures
 
 sealed class Heap(val heapCondition: (Int, Int) -> Boolean) {
     private var array = Array<Int?>(INIT_SIZE) { null }
