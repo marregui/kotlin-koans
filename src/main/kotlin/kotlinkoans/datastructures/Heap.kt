@@ -17,30 +17,52 @@
 
 package kotlinkoans.datastructures
 
-sealed class Heap(val heapCondition: (Int, Int) -> Boolean) {
-    private var array = Array<Int?>(INIT_SIZE) { null }
+import java.util.*
+
+sealed class Heap<T>(val heapCondition: (T, T) -> Boolean) {
+    private var array = arrayOfNulls<Any?>(INIT_SIZE)
     private var insertIdx = 0
 
-    @Synchronized
-    fun push(value: Int) {
-        if (insertIdx >= array.size) {
-            array = array.copyOf(2 * INIT_SIZE)
-        }
+    val size: Int
+        get() = insertIdx
+
+    fun peek() = if (insertIdx > 0) array[0] else null
+
+    private inline fun pushAndShiftDown(value: T) {
         array[insertIdx] = value
         var i = insertIdx++
         var parent = parent(i)
-        while (i >= 0 && !heapCondition(array[parent]!!, array[i]!!)) {
-            i = swap(i, parent)
+        while (i > 0 && !heapCondition(array[parent]!! as T, array[i]!! as T)) {
+            array[i] = array[parent].also { array[parent] = array[i] }
+            i = parent
             parent = parent(i)
         }
     }
 
-    @Synchronized
-    fun pop(): Int? {
+    fun push(a: Array<T>): Heap<T> {
+        if (insertIdx + a.size >= array.size) {
+            array = array.copyOf((2 * array.size).coerceAtLeast(insertIdx + a.size))
+        }
+        a.forEach(::pushAndShiftDown)
+        return this
+    }
+
+    fun push(first: T, vararg next: T): Heap<T> {
+        if (insertIdx + next.size >= array.size) {
+            array = array.copyOf((2 * array.size).coerceAtLeast(insertIdx + next.size))
+        }
+        pushAndShiftDown(first)
+        next.forEach(::pushAndShiftDown)
+        return this
+    }
+
+    inline fun <reified R: T> popAll(): Array<R>? = if (size == 0) null else Array(size) { pop()!! as R}
+
+    fun pop(): T? {
         if (insertIdx == 0) {
             return null
         }
-        val rootValue = array[0]
+        val rootValue = array[0] as T
         insertIdx--
         array[0] = array[insertIdx].also { array[insertIdx] = null }
         if (insertIdx > 1) {
@@ -52,21 +74,24 @@ sealed class Heap(val heapCondition: (Int, Int) -> Boolean) {
                 if (right < insertIdx) { // we have two children
                     val leftValue = array[left]!!
                     val rightValue = array[right]!!
-                    if (heapCondition(value, leftValue) && heapCondition(value, rightValue)) {
+                    if (heapCondition(value as T, leftValue as T) && heapCondition(value, rightValue as T)) {
                         break
                     }
-                    val (j, k) = if (heapCondition(rightValue, leftValue)) right to left else left to right
-                    if (!heapCondition(value, array[j]!!)) {
-                        i = swap(i, j)
-                    } else if (!heapCondition(value, array[k]!!)) {
-                        i = swap(i, k)
+                    val (j, k) = if (heapCondition(rightValue as T, leftValue as T)) right to left else left to right
+                    if (!heapCondition(value, array[j]!! as T)) {
+                        array[i] = array[j].also { array[j] = array[i] }
+                        i = j
+                    } else if (!heapCondition(value, array[k]!! as T)) {
+                        array[i] = array[k].also { array[k] = array[i] }
+                        i = k
                     }
                 } else if (left < insertIdx) { // we only have the left child
-                    if (heapCondition(value, array[left]!!)) {
+                    if (heapCondition(value as T, array[left]!! as T)) {
                         break
                     }
-                    if (!heapCondition(value, array[left]!!)) {
-                        i = swap(i, left)
+                    if (!heapCondition(value, array[left]!! as T)) {
+                        array[i] = array[left].also { array[left] = array[i] }
+                        i = left
                     }
                 } else { // no children
                     break
@@ -76,15 +101,10 @@ sealed class Heap(val heapCondition: (Int, Int) -> Boolean) {
         return rootValue
     }
 
-    @Synchronized
-    fun peek() = if (insertIdx > 0) array[0] else null
-
-    @Synchronized
-    fun size() = insertIdx
-
-    private fun swap(i: Int, j: Int): Int {
-        array[j] = array[i].also { array[i] = array[j] }
-        return j
+    fun clean() {
+        array = array.copyOf(INIT_SIZE)
+        Arrays.fill(array, null)
+        insertIdx = 0
     }
 
     companion object {
@@ -92,16 +112,9 @@ sealed class Heap(val heapCondition: (Int, Int) -> Boolean) {
         fun parent(i: Int) = (i - 1) / 2
         fun left(i: Int) = 2 * i + 1
         fun right(i: Int) = 2 * i + 2
-        private class MinHeap : Heap({ a, b -> a <= b})
-        private class MaxHeap: Heap({ a, b -> a >= b})
-        fun min(): Heap = MinHeap()
-        fun max(): Heap = MaxHeap()
-    }
-}
 
-fun main() {
-    for (heap in listOf(Heap.min(), Heap.max())) {
-        arrayOf(2, 7, 11, 15, -37, -1, 2, 0, 3, 1, 2, 1).forEach(heap::push)
-        (0 until heap.size()).forEach { _ ->  print(" ${heap.pop()}") }.also { println() }
+        private class HeapImpl<T>(heapCondition: (T, T) -> Boolean) : Heap<T>(heapCondition)
+
+        fun <T> newInstance(heapCondition: (T, T) -> Boolean): Heap<T> = HeapImpl(heapCondition)
     }
 }
