@@ -30,7 +30,7 @@ class GameOfLife(private val n: Int) : Game() {
     private var grid = BooleanArray(n * n)
     // double buffer for rendering.
     private var swapGrid = BooleanArray(n * n)
-    private var statusMsg = "Space to pause/resume, Enter to reset/pause"
+    private var statusMsg = "Space to pause/resume, Enter to pause/reset"
 
     init {
         isDoubleBuffered = true
@@ -102,7 +102,7 @@ class GameOfLife(private val n: Int) : Game() {
             if (!statusMsg.isBlank()) {
                 color = TEXT_COLOR
                 font = TEXT_FONT
-                drawString(statusMsg, 10, Snake.HEADER_HEIGHT + Snake.MARGIN_WIDTH / 10)
+                drawString(statusMsg, 10, 10 + g2.fontMetrics.height)
             }
             color = CELL_COLOR
             for (i in grid.indices) {
