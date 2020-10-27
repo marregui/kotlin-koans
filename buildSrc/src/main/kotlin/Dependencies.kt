@@ -33,7 +33,7 @@ object Versions {
 
 object Libs {
     val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
-    val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlinCoroutines}"
+    val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
 
     val logging = "org.apache.logging.log4j:log4j-slf4j-impl:${Versions.log4j_slf4j}"
     val junitJupiter = "org.junit.jupiter:junit-jupiter:${Versions.junit_jupiter}"
