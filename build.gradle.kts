@@ -15,6 +15,7 @@ repositories {
 
 dependencies {
     implementation(Libs.kotlinCoroutines)
+    implementation(Libs.kotlinReflect)
     implementation(kotlin("stdlib-jdk8"))
     implementation(Libs.logging)
     testImplementation(Libs.junitJupiter)
