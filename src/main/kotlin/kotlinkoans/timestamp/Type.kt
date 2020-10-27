@@ -56,10 +56,10 @@ abstract class Type protected constructor(val name: String, valueSupplier: Suppl
 
     override fun hashCode() = name.hashCode()
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
             return true
         }
-        return o is Type && name == o.name
+        return other is Type && name == other.name
     }
 }

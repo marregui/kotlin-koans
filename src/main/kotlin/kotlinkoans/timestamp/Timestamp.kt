@@ -24,8 +24,8 @@ class Timestamp(dt: String?) : Type("timestamp") {
         withValueSupplier({ asStr })
     }
 
-    override fun equals(o: Any?): Boolean {
-        return super.equals(o) && o is Timestamp && utcEpochMicros == o.utcEpochMicros
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other) && other is Timestamp && utcEpochMicros == other.utcEpochMicros
     }
 
     override fun hashCode(): Int {
