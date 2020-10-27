@@ -17,6 +17,6 @@
 
 package kotlinkoans.algorithms
 
-import kotlinkoans.datastructures.Heap
+import kotlinkoans.datastructures.newHeap
 
-inline fun <reified T> heapSortedOf(array: Array<T>, noinline order: (T, T) -> Boolean) = Heap.newInstance(order).push(array).popAll<T>()
+inline fun <reified T: Any> heapSortedOf(array: Array<T>, noinline order: (T, T) -> Boolean) = newHeap<T>(order).push(*array).popAll<T>()
