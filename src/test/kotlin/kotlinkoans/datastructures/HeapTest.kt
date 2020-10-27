@@ -26,8 +26,8 @@ import org.junit.jupiter.api.Test
 class HeapTest {
 
     lateinit var array: Array<Int>
-    private val minIntHeap = Heap.newInstance<Int>{ a, b -> a < b}
-    private val maxIntHeap = Heap.newInstance<Int>{ a, b -> a > b}
+    private val minIntHeap = newHeap<Int>{ a, b -> a < b}
+    private val maxIntHeap = newHeap<Int>{ a, b -> a > b}
 
     @BeforeEach
     fun beforeEach() {
@@ -43,7 +43,7 @@ class HeapTest {
     @Test
     fun test_min_heap_array_parameter() {
         assertThat(
-            minIntHeap.push(array).popAll()!!,
+            minIntHeap.push(*array).popAll()!!,
             `is`(arrayOf(-37, -1, 0, 1, 1, 2, 2, 2, 3, 7, 11, 15)))
         assertThat(minIntHeap.size, `is`(0))
     }
@@ -51,7 +51,7 @@ class HeapTest {
     @Test
     fun test_max_heap_array_parameter() {
         assertThat(
-            maxIntHeap.push(array).popAll()!!,
+            maxIntHeap.push(*array).popAll()!!,
             `is`(arrayOf(15, 11, 7, 3, 2, 2, 2, 1, 1, 0, -1, -37)))
         assertThat(maxIntHeap.size, `is`(0))
     }
@@ -75,16 +75,16 @@ class HeapTest {
     @Test
     fun test_min_heap_string_parameters() {
         val array = arrayOf("Miguel", "Pablo",  "Pedro", "Catalina")
-        val minHeap = Heap.newInstance<String>{ a, b -> a < b}
+        val minHeap = newHeap<String>{ a, b -> a < b}
         assertThat(
-            minHeap.push(array).popAll()!!,
+            minHeap.push(*array).popAll()!!,
             `is`(arrayOf("Catalina", "Miguel", "Pablo", "Pedro")))
         assertThat(minHeap.size, `is`(0))
     }
 
     @Test
     fun test_max_heap_string_vararg_parameters() {
-        val maxHeap = Heap.newInstance<String>{ a, b -> a > b}
+        val maxHeap = newHeap<String>{ a, b -> a > b}
         assertThat(
             maxHeap.push("Miguel", "Pablo",  "Pedro", "Catalina").popAll()!!,
             `is`(arrayOf("Pedro", "Pablo", "Miguel", "Catalina")))
