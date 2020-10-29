@@ -16,29 +16,35 @@
  */
 
 object Versions {
-    // kotlin:
-    val kotlin = "1.4.10"
-    val kotlinCoroutines = "1.3.9"
+    // kotlin
+    const val kotlin = "1.4.10"
+    const val kotlinCoroutines = "1.3.9"
+
+    // nano service
+    const val sparkJava = "2.9.3"
+    const val gson = "2.8.6"
 
     // logging
-    val log4j_slf4j = "2.13.0"
+    const val slf4jApi = "1.7.30"
 
     // testing
-    val junit_jupiter = "5.6.2"
-    val junit_jupiter_api = "5.6.2"
-    val junit_jupiter_engine = "5.6.2"
-    val hamcrest = "2.2"
-    val mockito_core = "3.5.10"
+    const val junit_jupiter = "5.6.2"
+    const val junit_jupiter_api = "5.6.2"
+    const val junit_jupiter_engine = "5.6.2"
+    const val hamcrest = "2.2"
+    const val mockito_core = "3.5.10"
 }
 
 object Libs {
-    val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
-    val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
-
-    val logging = "org.apache.logging.log4j:log4j-slf4j-impl:${Versions.log4j_slf4j}"
-    val junitJupiter = "org.junit.jupiter:junit-jupiter:${Versions.junit_jupiter}"
-    val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:${Versions.junit_jupiter_api}"
-    val junitJupiterEngine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit_jupiter_engine}"
-    val hamcrest = "org.hamcrest:hamcrest:${Versions.hamcrest}"
-    val mokitoCore = "org.mockito:mockito-core:${Versions.mockito_core}"
+    const val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
+    const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
+    const val sparkJava = "com.sparkjava:spark-core:${Versions.sparkJava}"
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
+    const val slf4jApi = "org.slf4j:slf4j-api:${Versions.slf4jApi}"
+    const val slf4jLog4jBinding = "org.slf4j:slf4j-log4j12:${Versions.slf4jApi}"
+    const val junitJupiter = "org.junit.jupiter:junit-jupiter:${Versions.junit_jupiter}"
+    const val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:${Versions.junit_jupiter_api}"
+    const val junitJupiterEngine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit_jupiter_engine}"
+    const val hamcrest = "org.hamcrest:hamcrest:${Versions.hamcrest}"
+    const val mokitoCore = "org.mockito:mockito-core:${Versions.mockito_core}"
 }
