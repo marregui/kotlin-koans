@@ -14,10 +14,14 @@ repositories {
 }
 
 dependencies {
+    implementation(kotlin("stdlib-jdk8"))
     implementation(Libs.kotlinCoroutines)
     implementation(Libs.kotlinReflect)
-    implementation(kotlin("stdlib-jdk8"))
-    implementation(Libs.logging)
+    implementation(Libs.sparkJava)
+    implementation(Libs.gson)
+    implementation(Libs.slf4jApi)
+    implementation(Libs.slf4jLog4jBinding)
+
     testImplementation(Libs.junitJupiter)
     testImplementation(Libs.junitJupiterApi)
     testImplementation(Libs.junitJupiterEngine)
