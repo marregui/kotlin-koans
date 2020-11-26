@@ -114,7 +114,7 @@ private fun hexToDec(c: Char): Int = when (val lc = Character.toLowerCase(c)) {
 
 fun main(args: Array<String>) {
     if (args.size < 3) {
-        println("Syntax: java -cp.. kotlinkoans.nanoservice.MicroclientKt host port command [parameters]")
+        println("Syntax: java -cp.. kotlinkoans.nanoservice.Nanoclient host port command [parameters]")
         println("       note: the param 'this//is//cool' becomes 'this is cool' ('//' is interpreted as blank)")
         exitProcess(-1)
     }
