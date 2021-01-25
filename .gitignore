@@ -3,5 +3,6 @@
 *.iws
 *.swp
 .gradle
+.idea
 build
 build-cache
