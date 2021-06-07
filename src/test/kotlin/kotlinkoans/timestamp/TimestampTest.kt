@@ -80,35 +80,6 @@ class TimestampTest {
     }
 
     @Test
-    fun test_when_only_date_is_provided_then_current_system_time_is_included() {
-        val now: Instant = TimestampParser.withFixedInstant(TimestampParser.now())!!
-        val date: LocalDate = TimestampParser.TIMESTAMP_SPEC.parse("2020-09-09", LocalDate::from)
-        val dt = LocalDateTime.of(date, LocalTime.ofInstant(now, ZoneOffset.UTC))
-        val timestamp: Long = TimestampParser.toEpochMicro(dt.toInstant(ZoneOffset.UTC))
-        assertThat(TimestampParser.parse("2020-09-09"), `is`(timestamp))
-    }
-
-    @Test
-    fun test_when_same_date_is_provided_result_is_different_due_to_time() {
-        assertThat(TimestampParser.parse("2020-09-09"), not(TimestampParser.parse("2020-09-09")))
-    }
-
-    @Test
-    fun test_when_only_time_is_provided_then_current_system_date_is_included() {
-        val dateToday = LocalDate.ofInstant(TimestampParser.now(), ZoneOffset.UTC)
-        val timeStr = "T23:59:59.123456789"
-        val time: LocalTime = TimestampParser.TIMESTAMP_SPEC.parse(timeStr) { temporal: TemporalAccessor? -> LocalTime.from(temporal) }
-        val now = LocalDateTime.of(dateToday, time).toInstant(ZoneOffset.UTC)
-        val timestamp: Long = TimestampParser.toEpochMicro(now)
-        assertThat(TimestampParser.parse("T23:59:59.123456789"), `is`(timestamp))
-    }
-
-    @Test
-    fun test_when_same_time_is_provided_result_is_the_same_due_to_date() {
-        assertThat(TimestampParser.parse("T23:59:59.123456789"), `is`(TimestampParser.parse(" 23:59:59.123456789")))
-    }
-
-    @Test
     fun test_to_string() {
         val ts = Timestamp("1978-02-28 00:00:00.123456")
         assertThat(ts.utcEpochMicros, `is`(257472000123456L))

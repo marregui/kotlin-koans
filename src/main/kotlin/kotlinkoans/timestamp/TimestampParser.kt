@@ -55,12 +55,6 @@ class TimestampParser private constructor() {
                 when (t) {
                     is ZonedDateTime -> t.withZoneSameInstant(ZoneOffset.UTC).toInstant()
                     is LocalDateTime -> t.toInstant(ZoneOffset.UTC)
-                    is LocalDate -> LocalDateTime
-                        .of(t, LocalTime.ofInstant(now(), ZoneOffset.UTC))
-                        .toInstant(ZoneOffset.UTC)
-                    is LocalTime -> LocalDateTime
-                        .of(LocalDate.ofInstant(now(), ZoneOffset.UTC), t)
-                        .toInstant(ZoneOffset.UTC)
                     else -> throw IllegalStateException()
                 }
             )

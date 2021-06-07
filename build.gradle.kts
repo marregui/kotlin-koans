@@ -31,20 +31,20 @@ dependencies {
 
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
-    jvmTarget = "13"
+    jvmTarget = "1.8"
 }
 
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
-    jvmTarget = "13"
+    jvmTarget = "1.8"
 }
 
 application {
-    mainClass.set("kotlinkoans.Snake")
+    mainClass.set("kotlinkoans.GameOfLife")
 }
 
 tasks.named<Wrapper>("wrapper") {
-    gradleVersion = "6.7"
+    gradleVersion = "6.8"
     distributionType = Wrapper.DistributionType.ALL
 }
 

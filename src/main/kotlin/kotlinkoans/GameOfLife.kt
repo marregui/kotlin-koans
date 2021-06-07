@@ -121,7 +121,8 @@ class GameOfLife(private val n: Int) : Game() {
         fun main(args: Array<String>) {
             val width = 900
             val height = 800
-            val game = GameOfLife(421)
+            val game = GameOfLife(122)
+//            val game = GameOfLife(421)
             with(JFrame("Game Of Life V1.0")) {
                 defaultCloseOperation = JFrame.EXIT_ON_CLOSE
                 contentPane.add(game)
